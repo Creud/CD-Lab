@@ -908,12 +908,23 @@ canvas.spark{vertical-align:middle;}
   #sidebar { display: none !important; }
 
   /* Header compact */
-  #header { height: 48px; padding: 0 14px; }
-  .logo { font-size: 12px; letter-spacing: .18em; }
+  #header { height: 48px; padding: 0 10px; overflow: hidden; }
+  .logo { font-size: 12px; letter-spacing: .18em; flex-shrink: 0; }
   #tz-strip { display: none; }
   .h-pill { font-size: 10px; }
   #clock { font-size: 11px; }
   .clock-fmt-btn { display: none; }
+  /* Hide secondary header pills on mobile */
+  .h-meta { gap: 8px; min-width: 0; }
+  .h-meta .h-pill:nth-child(2),
+  .h-meta .h-pill:nth-child(3),
+  .h-meta .h-pill:nth-child(5) { display: none; }
+  /* Hide weather and compress right side */
+  .wx-btn { display: none; }
+  .notif-btn { flex-shrink: 0; }
+  .clock-wrap { display: none; }
+  #header > div:first-child { gap: 10px; min-width: 0; overflow: hidden; }
+  #header > div:last-child { gap: 6px; flex-shrink: 0; }
 
   /* Main layout: single column, full width */
   #layout {
