@@ -1238,6 +1238,21 @@ canvas.spark{vertical-align:middle;}
     min-height: 36px; letter-spacing: .08em;
   }
 }
+
+/* ── PULL TO REFRESH ── */
+#ptr-indicator{position:fixed;top:48px;left:50%;transform:translateX(-50%) translateY(-60px);width:36px;height:36px;border-radius:50%;background:var(--bg1);border:1px solid var(--line);display:flex;align-items:center;justify-content:center;font-size:16px;color:var(--hi);z-index:300;transition:transform .2s;pointer-events:none;opacity:0;}
+#ptr-indicator.pulling{opacity:1;transform:translateX(-50%) translateY(8px);}
+#ptr-indicator.refreshing{opacity:1;transform:translateX(-50%) translateY(8px);animation:ptr-spin .6s linear infinite;}
+@keyframes ptr-spin{to{rotate:360deg;}}
+#qa-sheet{position:fixed;bottom:64px;left:0;right:0;z-index:600;background:var(--bg1);border-top:1px solid var(--line);border-radius:16px 16px 0 0;padding:16px;transform:translateY(100%);transition:transform .25s ease;display:flex;flex-direction:column;gap:10px;}
+#qa-sheet.open{transform:translateY(0);}
+#qa-sheet-title{font-size:9px;color:var(--mid);letter-spacing:.14em;margin-bottom:4px;}
+.qa-btn-row{display:flex;gap:8px;}
+.qa-btn{flex:1;padding:10px 0;border:1px solid var(--dim);background:transparent;color:var(--text);font-family:'Share Tech Mono',monospace;font-size:10px;letter-spacing:.1em;cursor:pointer;border-radius:4px;}
+.qa-btn.primary{border-color:var(--hi);color:var(--hi);}
+.qa-btn.danger{border-color:var(--warn);color:var(--warn);}
+#qa-overlay{display:none;position:fixed;inset:0;z-index:599;}
+#qa-overlay.open{display:block;}
 </style>
 </head>
 <body>
@@ -5281,6 +5296,25 @@ document.head.appendChild(spinStyle);
     portfolioHdr.parentElement.appendChild(shareBtn);
   }
 })();
+</script>
+
+<div id="ptr-indicator">↻</div>
+<div id="qa-overlay" onclick="closeQASheet()"></div>
+<div id="qa-sheet"><div id="qa-sheet-title">AGENT ACTION</div><div class="qa-btn-row"><button class="qa-btn primary" onclick="closeQASheet()">▶ RUN</button><button class="qa-btn" onclick="closeQASheet()">⏸ PAUSE</button></div><div class="qa-btn-row"><button class="qa-btn" onclick="closeQASheet()">📋 LOGS</button><button class="qa-btn danger" onclick="closeQASheet()">⚙ CONFIG</button></div><button class="qa-btn" style="margin-top:4px" onclick="closeQASheet()">✕ CANCEL</button></div>
+<script>
+(function(){
+if(window.innerWidth>768)return;
+const layout=document.getElementById('layout');
+const ptr=document.getElementById('ptr-indicator');
+if(!layout||!ptr)return;
+let sY=0,pull=false;
+layout.addEventListener('touchstart',e=>{if(layout.scrollTop===0){sY=e.touches[0].clientY;pull=true;}},{passive:true});
+layout.addEventListener('touchmove',e=>{if(!pull)return;if(e.touches[0].clientY-sY>10)ptr.classList.add('pulling')},{passive:true});
+layout.addEventListener('touchend',e=>{if(!pull)return;const dy=e.changedTouches[0].clientY-sY;if(dy>60){ptr.classList.remove('pulling');ptr.classList.add('refreshing');setTimeout(()=>{ptr.classList.remove('refreshing');if(typeof refreshData==='function')refreshData();},1200);}else{ptr.classList.remove('pulling');}pull=false;});
+})();
+function openQASheet(n){document.getElementById('qa-sheet-title').textContent=(n||'AGENT')+' — ACTION';document.getElementById('qa-sheet').classList.add('open');document.getElementById('qa-overlay').classList.add('open');if(navigator.vibrate)navigator.vibrate(30);}
+function closeQASheet(){document.getElementById('qa-sheet').classList.remove('open');document.getElementById('qa-overlay').classList.remove('open');}
+document.querySelectorAll('.agent-block,.blk-hdr').forEach(el=>{let t;el.addEventListener('touchstart',()=>{t=setTimeout(()=>openQASheet(el.querySelector('.agent-name,.blk-t')?.textContent?.trim()),500);});el.addEventListener('touchend',()=>clearTimeout(t));el.addEventListener('touchmove',()=>clearTimeout(t));});
 </script>
 </body>
 </html>
