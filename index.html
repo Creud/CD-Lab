@@ -1098,7 +1098,7 @@ canvas.spark{vertical-align:middle;}
     <div class="auth-denied" id="auth-denied">
       â WALLET MISMATCH â ACCESS DENIED
     </div>
-    <button class="auth-btn" id="auth-btn" onclick="unlockDashboard()">
+    <button class="auth-btn" id="auth-btn" onclick="(function(){var o=document.getElementById('auth');o.style.transition='opacity 0.6s';o.style.opacity='0';setTimeout(function(){o.style.display='none';},600);})()">
       UNLOCK DASHBOARD
     </button>
   </div>
