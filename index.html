@@ -1098,6 +1098,122 @@ canvas.spark{vertical-align:middle;}
 @media (max-width: 768px) {
   #mobile-nav { display: flex; }
 }
+
+/* ══════════════════════════════════════════════
+   FASE 2 — MOBILE MODULE LAYOUT
+   ══════════════════════════════════════════════ */
+@media (max-width: 768px) {
+
+  /* Layout: collapse grid into scrollable flex column */
+  #layout {
+    display: flex !important;
+    flex-direction: column !important;
+    overflow-y: auto;
+    overflow-x: hidden;
+    -webkit-overflow-scrolling: touch;
+    flex: 1;
+    min-height: 0;
+    gap: 0;
+  }
+  .col { display: contents; }
+  .mod-section { display: none !important; }
+  .mod-section.active {
+    display: flex !important;
+    flex-direction: column;
+    gap: 6px;
+    padding: 8px 8px 80px;
+    overflow-y: auto;
+    -webkit-overflow-scrolling: touch;
+    flex: 1;
+    min-height: 0;
+  }
+  .mod-section.active .blk { flex-shrink: 0; }
+  .mod-section.active .blk.grow { flex-shrink: 1; }
+
+  /* ── DASHBOARD: agent cards ── */
+  .db-card { border-radius: 6px; padding: 12px 14px; flex-shrink: 0; }
+  .db-card-hdr { min-height: 44px; display: flex; align-items: center; gap: 8px; flex-wrap: wrap; }
+  .db-metrics { display: flex; flex-direction: row; gap: 14px; flex-wrap: wrap; margin: 6px 0; }
+  .db-actions { display: flex; gap: 6px; flex-wrap: wrap; margin-top: 6px; }
+  .db-actions a, .db-actions button, .db-actions .ce-btn {
+    min-height: 44px; min-width: 80px; flex: 1;
+    display: inline-flex; align-items: center; justify-content: center;
+    padding: 0 14px; font-size: 11px;
+  }
+  /* Agent status rows */
+  .sm-agent-row { min-height: 44px; align-items: center; padding: 0 12px; }
+  .sm-agent-dot { width: 10px; height: 10px; flex-shrink: 0; }
+
+  /* Calendar: scrollable week grid, 44px cells */
+  #cal-grid { max-height: 260px; overflow-y: auto; }
+  .cal-week { gap: 1px; }
+  .cal-cell { min-height: 44px; min-width: 38px; flex: 1; font-size: 10px; }
+  #cost-list { max-height: 130px; overflow-y: auto; -webkit-overflow-scrolling: touch; }
+  #cost-total { font-size: 15px; }
+
+  /* ── DEFI: token table scroll + sticky symbol ── */
+  .blk:has(table.t) { overflow-x: auto; -webkit-overflow-scrolling: touch; }
+  table.t { min-width: 500px; width: max-content; }
+  table.t th:first-child, table.t td:first-child {
+    position: sticky; left: 0; background: var(--bg1); z-index: 3;
+    box-shadow: 2px 0 4px rgba(0,0,0,.5); min-width: 70px;
+  }
+  /* Sparklines min 32px */
+  canvas[id^="sp"] { height: 32px !important; min-height: 32px !important; width: 72px !important; }
+  .spark { height: 32px !important; min-height: 32px !important; }
+  /* Portfolio value prominent */
+  .co-total { font-size: 22px !important; }
+  #chart-wrap { min-height: 130px; flex-shrink: 0; }
+  /* Flow ladder hidden */
+  #lbf-body { display: none !important; }
+
+  /* ── EDUCATION: vertical course cards ── */
+  .course-row {
+    flex-direction: column !important; align-items: flex-start !important;
+    min-height: auto; padding: 12px; gap: 5px; flex-shrink: 0;
+  }
+  .course-row.selected { border-left: 3px solid var(--hi); }
+  .course-name { font-size: 13px; }
+  .course-bar { height: 5px; border-radius: 3px; width: 100%; margin-top: 4px; }
+  .bc-stat-grid {
+    display: flex !important; flex-direction: row !important;
+    overflow-x: auto; -webkit-overflow-scrolling: touch;
+    gap: 8px; padding: 4px 0; flex-wrap: nowrap;
+  }
+  .bc-stat-cell { min-width: 88px; flex-shrink: 0; text-align: center; padding: 8px; }
+  .bc-stat-val { font-size: 18px !important; }
+  /* EOS button bar sticky at bottom */
+  .msg-bar {
+    position: sticky; bottom: 0; z-index: 10;
+    padding: 8px; background: var(--bg1); border-top: 1px solid var(--line);
+  }
+  .msg-bar .ce-btn, .msg-bar button {
+    width: 100%; min-height: 44px; font-size: 13px;
+    display: flex; align-items: center; justify-content: center;
+  }
+
+  /* ── 3D OPS: deadline card + phase track ── */
+  .proj-detail { padding: 14px 12px; gap: 10px; flex-direction: column; }
+  .pd-name { font-size: 15px; margin-bottom: 3px; }
+  .phase-track { display: flex; flex-direction: column; gap: 4px; }
+  .phase-item { min-height: 44px; align-items: center; padding: 6px 8px; border-radius: 4px; }
+  .ph-num { width: 24px; height: 24px; font-size: 11px; flex-shrink: 0; }
+  .ph-bar-wrap { height: 6px; border-radius: 3px; }
+  .ph-status { font-size: 9px; padding: 2px 6px; border-radius: 3px; flex-shrink: 0; }
+  .ce-label { font-size: 11px; padding: 3px 10px; border-radius: 4px; }
+
+  /* ── CONTENT: social cards + queue ── */
+  .ig-card { width: 100%; flex-shrink: 0; border-radius: 6px; overflow: hidden; }
+  .ig-metrics { display: grid !important; grid-template-columns: repeat(4,1fr); gap: 2px; padding: 4px; }
+  .ig-m-cell { text-align: center; padding: 6px 2px; }
+  .ig-m-val { font-size: 15px !important; }
+  .ig-m-lbl { font-size: 9px; }
+  .ig-q-row { min-height: 44px; align-items: center; padding: 8px 12px; cursor: pointer; }
+  #cc-pipe-queue { max-height: 200px; overflow-y: auto; -webkit-overflow-scrolling: touch; }
+  .sug-card { min-height: 56px; padding: 10px 12px; flex-shrink: 0; flex-direction: column; gap: 4px; }
+  .draft-area { min-height: 90px; }
+}
+
 </style>
 </head>
 <body>
@@ -4872,6 +4988,28 @@ if(window.innerWidth <= 768){
   const dashBtn = document.querySelector('.mn-btn[data-mod="dashboard"]');
   if(dashBtn) dashBtn.classList.add('active');
 }
+
+// ── FASE 2: assign data-tab to mod-sections by row position ──
+(function() {
+  var tabOrder = ['defi','education','3d','content','dashboard'];
+  document.querySelectorAll('#layout .col').forEach(function(col) {
+    var secs = Array.from(col.children).filter(function(c){
+      return c.classList.contains('mod-section');
+    });
+    secs.forEach(function(sec,i){
+      if(tabOrder[i] !== undefined) sec.setAttribute('data-tab', tabOrder[i]);
+    });
+  });
+  // On mobile, activate dashboard as default
+  if(window.innerWidth <= 768){
+    var hb = document.querySelector('.mn-btn.home');
+    if(hb) mobileNav(hb, 'dashboard');
+    else {
+      document.querySelectorAll('.mod-section').forEach(function(s){s.classList.remove('active');});
+      document.querySelectorAll('.mod-section[data-tab="dashboard"]').forEach(function(s){s.classList.add('active');});
+    }
+  }
+})();
 </script>
 </body>
 </html>
