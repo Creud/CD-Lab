@@ -2951,7 +2951,7 @@ function toTimeData(dataArr){
   });
 }
 
-acync function fetchCoinData(id){
+async function fetchCoinData(id){
   if(priceCache[id]) return priceCache[id];
   try{
     const url=`https://api.coingecko.com/api/v3/coins/${id}/market_chart?vs_currency=usd&days=30&interval=daily`;
@@ -5066,7 +5066,7 @@ if(window.innerWidth <= 768){
     var active = document.querySelector('.mn-btn.active');
     if (!active) return 2; // default dashboard
     var onclick = active.getAttribute('onclick') || '';
-    var m = onclick.match(/'([^']+)'s*)/);
+    var m = onclick.match(/'([^']+)'\s*)/);
     if (!m) return 2;
     return TAB_ORDER.indexOf(m[1]);
   }
