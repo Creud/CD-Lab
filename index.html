@@ -5316,5 +5316,49 @@ function openQASheet(n){document.getElementById('qa-sheet-title').textContent=(n
 function closeQASheet(){document.getElementById('qa-sheet').classList.remove('open');document.getElementById('qa-overlay').classList.remove('open');}
 document.querySelectorAll('.agent-block,.blk-hdr').forEach(el=>{let t;el.addEventListener('touchstart',()=>{t=setTimeout(()=>openQASheet(el.querySelector('.agent-name,.blk-t')?.textContent?.trim()),500);});el.addEventListener('touchend',()=>clearTimeout(t));el.addEventListener('touchmove',()=>clearTimeout(t));});
 </script>
+
+<script>
+/* ── RESCUE: fix broken agent additions ── */
+(function(){
+  // Fix 1: switchMod alias (agent called wrong function name)
+  window.switchMod = function(name) {
+    var btn = document.querySelector('.mn-btn[data-mod="'+name+'"]');
+    if(btn && typeof mobileNav === 'function') { mobileNav(btn, name); return; }
+    // Fallback: directly toggle mod-sections
+    document.querySelectorAll('.mod-section').forEach(function(s){ s.classList.remove('active'); });
+    var target = document.querySelector('.mod-section[data-tab="'+name+'"]') ||
+                 document.querySelector('#mod-'+name) ||
+                 document.querySelector('[data-module="'+name+'"]');
+    if(target) { target.classList.add('active'); }
+    document.querySelectorAll('.mn-btn').forEach(function(b){ b.classList.remove('active'); });
+    if(btn) btn.classList.add('active');
+  };
+
+  // Fix 2: make sure dashboard module shows on load
+  function initMobile() {
+    if(window.innerWidth > 768) return;
+    var activeSec = document.querySelector('.mod-section.active');
+    if(!activeSec) {
+      // Find dashboard section and activate it
+      var dash = document.querySelector('#mod-dashboard, .mod-section');
+      if(dash) {
+        dash.classList.add('active');
+        var homeBtn = document.querySelector('.mn-btn.home, .mn-btn[data-mod="dashboard"]');
+        if(homeBtn) homeBtn.classList.add('active');
+      }
+    }
+    // Make sure mobile-nav is visible
+    var nav = document.getElementById('mobile-nav');
+    if(nav) { nav.style.display = 'flex'; }
+  }
+
+  if(document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', initMobile);
+  } else {
+    initMobile();
+  }
+  setTimeout(initMobile, 500);
+})();
+</script>
 </body>
 </html>
