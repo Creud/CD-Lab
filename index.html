@@ -4968,6 +4968,9 @@ async function gcalSync(){
     pushLog(`<span class="lh">GCAL</span> <span style="color:var(--warn);">error: ${err.message}</span>`);
   }
 }
+
+  } catch(e) { console.error('Lab init error:', e); }
+}, 0);
 </script>
 
 <!-- ══ MOBILE BOTTOM NAV ══════════════════════════════════ -->
