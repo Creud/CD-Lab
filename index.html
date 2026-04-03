@@ -3054,14 +3054,6 @@ function drawPriceChart(){
         priceLineVisible:false,lastValueVisible:true,
         title:s.label,
       });
-  // Add/update series
-  priceSeries.forEach(s=>{
-    if(!priceChartSeries[s.id]){
-      priceChartSeries[s.id]=priceChart.addLineSeries({
-        color:s.color,lineWidth:s.lw||1,
-        priceLineVisible:false,lastValueVisible:true,
-        title:s.label,
-      });
     }
     priceChartSeries[s.id].applyOptions({visible:!priceHidden[s.id]});
     try{priceChartSeries[s.id].setData(toTimeData(s.data));}catch(e){console.warn('price chart:',e);}
