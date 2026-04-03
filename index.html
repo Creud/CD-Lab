@@ -3618,7 +3618,7 @@ function updateNfBadges(){
 /* ── BOOTCAMPS CRM ── */
 const coursesDB = {
   dc101: {
-    title:'DIGITAL CITIZEN 101', subj'$149 · WEB3 ONBOARDING · 4H',
+    title:'DIGITAL CITIZEN 101', subj:'$149 · WEB3 ONBOARDING · 4H',
     price:'$149', enrolled:12, next:'APR 3', revenue:'$1,788',
     students:[
       {name:'María García',   contact:'@mariag_mx',   paid:true,  date:'MAR 20'},
@@ -5006,7 +5006,7 @@ function mobileNav(btn, mod){
   if(layout) layout.scrollTop = 0;
 }
 // Sync mobile nav when desktop sidebar is used
-const _origSwitchMod = switchMod;
+const _origSwitchMod = switchModule;
 window.switchMod = function(key){
   _origSwitchMod(key);
   document.querySelectorAll('.mn-btn').forEach(b=>{
