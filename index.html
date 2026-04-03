@@ -3314,7 +3314,7 @@ function updateProposalBadge(){
     const c=document.getElementById('nft'+i); if(!c)return;
     const ctx=c.getContext('2d'),W=c.width,K=c.height;
     // bg
-    ctx.fillStyle=n.bg; ctx.fillRect(0,0,W,H);
+    ctx.fillStyle=n.bg; ctx.fillRect(0,0,W,K);
     // noise texture
     for(let p=0;p<60;p++){
       ctx.fillStyle=`rgba(255,255,255,${Math.random()*.04})`;
